@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:stateful_widget/models/counter_2_model.dart';
 import 'package:stateful_widget/models/counter_model.dart';
 import 'package:provider/provider.dart';
 
@@ -24,11 +25,22 @@ class MyHomePage extends StatelessWidget {
                   .toString(),
               style: Theme.of(context).textTheme.headline4,
             ),
+            Text(
+              context
+                  .select<Counter2State, int>(
+                    (state) => state.counter,
+                  )
+                  .toString(),
+              style: Theme.of(context).textTheme.headline4,
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.read<CounterModel>().incrementCounter(),
+        onPressed: () => {
+          context.read<CounterModel>().incrementCounter(),
+          context.read<Counter2Model>().decrementCounter(),     
+        },
         child: Icon(Icons.add),
       ),
     );

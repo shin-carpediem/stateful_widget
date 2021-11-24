@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
+import 'package:provider/provider.dart';
+import 'package:stateful_widget/models/counter_2_model.dart';
 import 'package:stateful_widget/models/counter_model.dart';
 import 'package:stateful_widget/screen/my_home_page.dart';
 
@@ -17,8 +19,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: StateNotifierProvider<CounterModel, CounterState>(
-        create: (_) => CounterModel(),
+      home: MultiProvider(
+        providers: [
+          StateNotifierProvider<CounterModel, CounterState>(
+            create: (_) => CounterModel(),
+          ),
+          StateNotifierProvider<Counter2Model, Counter2State>(
+            create: (_) => Counter2Model(),
+          ),
+        ],
         child: MyHomePage(),
       ),
     );
