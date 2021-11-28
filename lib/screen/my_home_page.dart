@@ -1,13 +1,16 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:stateful_widget/models/counter_2_model.dart';
-import 'package:stateful_widget/models/counter_model.dart';
-import 'package:provider/provider.dart';
+import 'package:stateful_widget/main.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final counterstate = ref.watch(CounterStateProvider);
+    final counter2state = ref.watch(Counter2StateProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Flutter Demo Home Page'),
@@ -18,19 +21,11 @@ class MyHomePage extends StatelessWidget {
           children: [
             Text('You have pushed the button this many times:'),
             Text(
-              context
-                  .select<CounterState, int>(
-                    (state) => state.counter,
-                  )
-                  .toString(),
+              counterstate.counter.toString(),
               style: Theme.of(context).textTheme.headline4,
             ),
             Text(
-              context
-                  .select<Counter2State, int>(
-                    (state) => state.counter,
-                  )
-                  .toString(),
+              counter2state.counter.toString(),
               style: Theme.of(context).textTheme.headline4,
             ),
           ],
@@ -38,8 +33,8 @@ class MyHomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
-          context.read<CounterModel>().incrementCounter(),
-          context.read<Counter2Model>().decrementCounter(),     
+          ref.read(CounterStateProvider.notifier).incrementCounter(),
+          ref.read(Counter2StateProvider.notifier).decrementCounter(),
         },
         child: Icon(Icons.add),
       ),

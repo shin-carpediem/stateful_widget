@@ -17,9 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$CounterStateTearOff {
   const _$CounterStateTearOff();
 
-  _CounterState call(int counter) {
+  _CounterState call({int counter = 0}) {
     return _CounterState(
-      counter,
+      counter: counter,
     );
   }
 }
@@ -90,7 +90,7 @@ class __$CounterStateCopyWithImpl<$Res> extends _$CounterStateCopyWithImpl<$Res>
     Object? counter = freezed,
   }) {
     return _then(_CounterState(
-      counter == freezed
+      counter: counter == freezed
           ? _value.counter
           : counter // ignore: cast_nullable_to_non_nullable
               as int,
@@ -101,8 +101,9 @@ class __$CounterStateCopyWithImpl<$Res> extends _$CounterStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_CounterState with DiagnosticableTreeMixin implements _CounterState {
-  const _$_CounterState(this.counter);
+  const _$_CounterState({this.counter = 0});
 
+  @JsonKey(defaultValue: 0)
   @override
   final int counter;
 
@@ -137,7 +138,7 @@ class _$_CounterState with DiagnosticableTreeMixin implements _CounterState {
 }
 
 abstract class _CounterState implements CounterState {
-  const factory _CounterState(int counter) = _$_CounterState;
+  const factory _CounterState({int counter}) = _$_CounterState;
 
   @override
   int get counter;

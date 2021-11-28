@@ -1,14 +1,21 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter_state_notifier/flutter_state_notifier.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stateful_widget/models/counter_2_model.dart';
 import 'package:stateful_widget/models/counter_model.dart';
 import 'package:stateful_widget/screen/my_home_page.dart';
 
+final CounterStateProvider =
+    StateNotifierProvider<CounterModel, CounterState>((ref) => CounterModel());
+final Counter2StateProvider =
+    StateNotifierProvider<Counter2Model, Counter2State>(
+        (ref) => Counter2Model());
+
 void main() {
-  runApp(MyApp());
+  runApp(ProviderScope(
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,17 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MultiProvider(
-        providers: [
-          StateNotifierProvider<CounterModel, CounterState>(
-            create: (_) => CounterModel(),
-          ),
-          StateNotifierProvider<Counter2Model, Counter2State>(
-            create: (_) => Counter2Model(),
-          ),
-        ],
-        child: MyHomePage(),
-      ),
+      home: MyHomePage(),
     );
   }
 }

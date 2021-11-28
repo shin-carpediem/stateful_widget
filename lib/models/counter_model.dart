@@ -7,10 +7,12 @@ part 'counter_model.freezed.dart';
 
 @freezed
 class CounterState with _$CounterState {
-  const factory CounterState(int counter) = _CounterState;
+  const factory CounterState({
+    @Default(0) int counter,
+  }) = _CounterState;
 }
 
 class CounterModel extends StateNotifier<CounterState> {
-  CounterModel() : super(const CounterState(0));
+  CounterModel() : super(const CounterState());
   incrementCounter() => state = state.copyWith(counter: state.counter + 1);
 }
